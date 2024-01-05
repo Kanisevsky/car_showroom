@@ -3,14 +3,14 @@ import {useState} from "react"
 import Image from "next/image"
 import { CarProps } from "@/app/types"
 import { calculateCarRent } from "@/utils"
-import { CustomButton } from "."
+import { CardDetails, CustomButton } from "."
 
 interface CarCardProps {
   car: CarProps
 }
 
 function CarCard({car} :CarCardProps) {
-  const [IsOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const {city_mpg, year, make, model, transmission, drive} = car
   const carRent = calculateCarRent(city_mpg, year)
 
@@ -50,10 +50,11 @@ function CarCard({car} :CarCardProps) {
           <CustomButton title="view More" containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
             textStyles="text-white text-[14px] leading-[17px] font-bold"
             rightIcon="/right-arrow.svg"
-            handleClick={() => setIsOpen}
+            handleClick={() => setIsOpen(true)}
           />
         </div>
       </div>
+      <CardDetails isOpen={isOpen} closeModal={() => setIsOpen(false)} car={car}/>
     </div>
   )
 }
