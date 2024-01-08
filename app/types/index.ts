@@ -1,17 +1,22 @@
 import { MouseEventHandler } from "react";
 
 export interface CustomButtonProps {
-  title: String;
+  title: string;
   btnType?: "button" | "submit";
-  containerStyles?: String;
+  containerStyles?: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
   textStyles?: string;
   rightIcon?: string;
   isDisabled?: boolean;
 }
 
+export interface OptionPropsArray {
+  title: string;
+  value: string;
+}
 export interface CustomFilterProps {
-  title: String;
+  title: string;
+  options: OptionPropsArray[];
 }
 
 export interface FilterProps {
@@ -23,7 +28,7 @@ export interface FilterProps {
 }
 
 export interface SearchManufacturerProps {
-  manufacturer: String;
+  manufacturer: string;
   setManufacturer: (manufacturer: string) => void;
 }
 
