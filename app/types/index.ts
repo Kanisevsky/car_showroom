@@ -14,6 +14,14 @@ export interface CustomFilterProps {
   title: String;
 }
 
+export interface FilterProps {
+  manufacturer: string;
+  year: number;
+  fuel: string;
+  limit: number;
+  model: string;
+}
+
 export interface SearchManufacturerProps {
   manufacturer: String;
   setManufacturer: (manufacturer: string) => void;
