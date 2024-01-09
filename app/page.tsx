@@ -1,16 +1,52 @@
+"use client"
+import { useState, useEffect } from 'react';
 import {Hero,SearchBar, CustomFilter, CarCard, ShowMore} from '@/components'
-import { fetchCars } from '@/utils'
 import { fuels, yearsOfProduction } from '@/constants';
+import { fetchCars } from '@/utils';
 
-export default async function Home({searchParams}) {
-  const allCars = await fetchCars({
-    manufacturer:searchParams.manufacturer || "",
-    year: searchParams.year || 2022,
-    fuel: searchParams.fuel || "",
-    limit: searchParams.limit || 10,
-    model: searchParams.model || ""
+export default function Home() {
+  const [allCars, setAllCars] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // search states
+  const [manufacturer, setManufacturer] = useState("")
+  const [model, setModel] = useState("")
+  
+  //filter states
+
+  const [fuel, setFuel] = useState("")
+  const [year, setYear] = useState(2022)
+
+  // pagination state
+
+  const [limit, setLimit] = useState(10)
+
+  const getCars = async () => {
+   try {
+     const result = await fetchCars({
+    manufacturer:manufacturer || "",
+    year: year || 2022,
+    fuel: fuel || "",
+    limit: limit || 10,
+    model: model || ""
   });
+    setAllCars(result)
+   } catch (error) {
+      console.log(error)
+   }
+   finally {
+      setLoading(false)
+   }
+  }
 
+  useEffect(() => {
+      getCars()
+    return () => {
+     
+    }
+  }, [fuel, year, model, manufacturer, limit])
+  
+  
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars
   return (
     <main className="overflow-hidden">
@@ -35,8 +71,8 @@ export default async function Home({searchParams}) {
               ))}
             </div>
             <ShowMore 
-            pageNumber={(searchParams.pageNumber || 10) / 10}
-            isNext={searchParams.limit || 10  > allCars.length}
+            pageNumber={(limit || 10) / 10}
+            isNext={limit || 10  > allCars.length}
             />
 
           </section>

@@ -49,5 +49,5 @@ export interface CarProps {
 
 export interface ShowMoreProps {
   pageNumber: number;
-  isNext: string;
+  isNext: boolean;
 }
